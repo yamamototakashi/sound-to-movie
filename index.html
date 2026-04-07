@@ -38,10 +38,8 @@
     <h2>② 写真・テキスト素材</h2>
     <p class="hint">タイトルやメッセージを画像として追加できます</p>
     <div class="row">
-      <label class="btn btn-primary big">
-        写真を追加
-        <input type="file" id="photoInput" accept="image/*" multiple hidden>
-      </label>
+      <label class="btn btn-primary big" for="photoInput">写真を追加</label>
+      <input type="file" id="photoInput" class="file-input-hidden" accept="image/*" multiple>
       <button class="btn btn-secondary big" id="openTextDialog" type="button">テキスト画像を追加</button>
     </div>
     <ul class="materials" id="materialList"></ul>
@@ -51,10 +49,10 @@
   <!-- ③ 音楽選択 -->
   <section class="card">
     <h2>③ 音楽</h2>
-    <label class="btn btn-primary big block">
-      音楽ファイルを選ぶ
-      <input type="file" id="audioInput" accept="audio/*" hidden>
-    </label>
+    <label class="btn btn-primary big block" for="audioInput">音楽ファイルを選ぶ</label>
+    <input type="file" id="audioInput" class="file-input-hidden"
+           accept="audio/*,audio/mpeg,audio/mp4,audio/x-m4a,audio/aac,audio/wav,audio/x-wav,audio/ogg,audio/flac,.mp3,.m4a,.aac,.wav,.ogg,.flac,.aif,.aiff">
+    <p class="hint small">iPhoneで音楽を取り込む場合、あらかじめ「ファイル」アプリにMP3 / M4A / WAVなどを保存しておいてください。Apple Musicの曲は保護されているため選べません。</p>
     <div id="audioInfo" class="audio-info" hidden>
       <p class="audio-name" id="audioName"></p>
       <p class="audio-duration" id="audioDuration"></p>

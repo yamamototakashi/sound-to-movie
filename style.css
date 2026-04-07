@@ -353,5 +353,20 @@ dialog::backdrop { background: rgba(20,30,60,.4); }
 
 footer { padding: 16px; }
 
+/* ===== ファイル入力の視覚的非表示（タップは生きる） ===== */
+.file-input-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
 /* ===== モード別 表示切替 ===== */
 body.mode-auto .manual-only { display: none !important; }
