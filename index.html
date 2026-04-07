@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1, user-scalable=no">
+  <meta name="theme-color" content="#6c63ff">
+  <title>サクッと動画メーカー</title>
+
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icon-180.png">
+  <link rel="apple-touch-icon" href="icon-180.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="動画メーカー">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="mode-auto">
+
+<header class="hero">
+  <h1>サクッと動画メーカー</h1>
+  <p class="lead">写真と音楽を選ぶだけで動画になります</p>
+</header>
+
+<main>
+  <!-- ① モード選択 -->
+  <section class="card">
+    <h2>① モード</h2>
+    <div class="mode-switch" role="tablist">
+      <button class="mode-btn active" data-mode="auto" type="button">かんたん自動</button>
+      <button class="mode-btn" data-mode="manual" type="button">詳細設定</button>
+    </div>
+    <p class="hint" id="modeHint">写真と音楽を選ぶだけでOK！</p>
+  </section>
+
+  <!-- ② 素材選択 -->
+  <section class="card">
+    <h2>② 写真・テキスト素材</h2>
+    <p class="hint">タイトルやメッセージを画像として追加できます</p>
+    <div class="row">
+      <label class="btn btn-primary big">
+        写真を追加
+        <input type="file" id="photoInput" accept="image/*" multiple hidden>
+      </label>
+      <button class="btn btn-secondary big" id="openTextDialog" type="button">テキスト画像を追加</button>
+    </div>
+    <ul class="materials" id="materialList"></ul>
+    <p class="hint small" id="materialCount">素材はまだありません</p>
+  </section>
+
+  <!-- ③ 音楽選択 -->
+  <section class="card">
+    <h2>③ 音楽</h2>
+    <label class="btn btn-primary big block">
+      音楽ファイルを選ぶ
+      <input type="file" id="audioInput" accept="audio/*" hidden>
+    </label>
+    <div id="audioInfo" class="audio-info" hidden>
+      <p class="audio-name" id="audioName"></p>
+      <p class="audio-duration" id="audioDuration"></p>
+      <button id="audioPreviewBtn" class="btn btn-ghost" type="button">▶ 試聴</button>
+      <audio id="audioPreview" preload="metadata"></audio>
+    </div>
+  </section>
+
+  <!-- ④ 設定 -->
+  <section class="card">
+    <h2>④ 設定</h2>
+    <div class="setting">
+      <label for="setSize">動画サイズ</label>
+      <select id="setSize">
+        <option value="1080x1920">縦 1080×1920</option>
+        <option value="720x1280">縦 720×1280（軽量）</option>
+        <option value="1080x1080">正方形 1080×1080</option>
+      </select>
+    </div>
+    <div class="setting">
+      <label for="setTransition">切替効果</label>
+      <select id="setTransition">
+        <option value="fade" selected>フェード</option>
+        <option value="zoom">軽いズーム</option>
+        <option value="none">なし</option>
+      </select>
+    </div>
+    <div class="setting">
+      <label for="setBg">背景色</label>
+      <select id="setBg">
+        <option value="black" selected>黒</option>
+        <option value="white">白</option>
+        <option value="blur">ぼかし背景風</option>
+      </select>
+    </div>
+    <div class="setting">
+      <label for="setFit">画像の収まり</label>
+      <select id="setFit">
+        <option value="contain" selected>contain（全体表示）</option>
+        <option value="cover">cover（はみ出しトリミング）</option>
+      </select>
+    </div>
+    <div class="setting manual-only">
+      <label for="setPerSec">1枚あたり秒数</label>
+      <select id="setPerSec">
+        <option value="2">2秒</option>
+        <option value="3" selected>3秒</option>
+        <option value="5">5秒</option>
+        <option value="8">8秒</option>
+      </select>
+    </div>
+  </section>
+
+  <!-- ⑤ 動画生成 -->
+  <section class="card">
+    <h2>⑤ 動画を作る</h2>
+    <button id="generateBtn" class="btn btn-accent big block" type="button">▶ 動画を作る</button>
+    <div class="progress" id="progressArea" hidden>
+      <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+      <p id="progressText">準備中...</p>
+    </div>
+    <p id="errorBox" class="error" hidden></p>
+    <p class="hint small">出力形式は端末対応に合わせて自動選択（MP4 / WebM）。<br>音声合成が困難な端末では無音動画として保存されます。</p>
+  </section>
+
+  <!-- ⑥ プレビュー -->
+  <section class="card" id="previewCard" hidden>
+    <h2>⑥ プレビュー</h2>
+    <video id="previewVideo" controls playsinline></video>
+    <div class="row">
+      <a id="downloadBtn" class="btn btn-primary big" download>保存</a>
+      <button id="shareBtn" class="btn btn-secondary big" type="button">共有</button>
+    </div>
+  </section>
+</main>
+
+<!-- テキスト画像作成ダイアログ -->
+<dialog id="textDialog">
+  <form method="dialog" class="dialog-form">
+    <h2>テキスト画像を追加</h2>
+    <p class="hint small">タイトル / メッセージ / エンドカードに使えます</p>
+
+    <label>テキスト
+      <textarea id="textContent" rows="4" placeholder="ここに文字を入力"></textarea>
+    </label>
+
+    <div class="dialog-row">
+      <label class="half">背景色
+        <input type="color" id="textBg" value="#111133">
+      </label>
+      <label class="half">文字色
+        <input type="color" id="textFg" value="#ffffff">
+      </label>
+    </div>
+
+    <label>文字サイズ
+      <select id="textSize">
+        <option value="small">小</option>
+        <option value="medium" selected>中</option>
+        <option value="large">大</option>
+      </select>
+    </label>
+
+    <p class="dialog-error" id="textError" hidden></p>
+
+    <div class="dialog-actions">
+      <button value="cancel" class="btn btn-ghost" type="submit">キャンセル</button>
+      <button id="textConfirm" value="confirm" class="btn btn-primary" type="submit">追加</button>
+    </div>
+  </form>
+</dialog>
+
+<footer>
+  <p class="hint small center">© サクッと動画メーカー</p>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>

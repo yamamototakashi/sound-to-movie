@@ -1,0 +1,357 @@
+/* ===== サクッと動画メーカー スタイル ===== */
+:root {
+  --bg: #f4f6fb;
+  --card: #ffffff;
+  --primary: #6c63ff;
+  --primary-dark: #4d46cc;
+  --accent: #ff6584;
+  --secondary: #00b8a9;
+  --text: #1f2333;
+  --muted: #6b7280;
+  --border: #e5e7eb;
+  --shadow: 0 4px 16px rgba(20, 30, 60, 0.06);
+  --radius: 14px;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "ヒラギノ角ゴ ProN", "Yu Gothic", "Meiryo", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  padding:
+    env(safe-area-inset-top)
+    env(safe-area-inset-right)
+    calc(24px + env(safe-area-inset-bottom))
+    env(safe-area-inset-left);
+  max-width: 560px;
+  margin: 0 auto;
+  min-height: 100vh;
+}
+
+/* ----- ヒーロー ----- */
+.hero {
+  padding: 24px 20px 8px;
+  text-align: center;
+}
+.hero h1 {
+  margin: 0;
+  font-size: 26px;
+  letter-spacing: 0.02em;
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.hero .lead {
+  margin: 6px 0 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+main {
+  padding: 0 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* ----- カード ----- */
+.card {
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 18px 16px;
+  box-shadow: var(--shadow);
+}
+.card h2 {
+  margin: 0 0 12px;
+  font-size: 17px;
+  color: var(--text);
+}
+
+/* ----- モードスイッチ ----- */
+.mode-switch {
+  display: flex;
+  background: #eef0fa;
+  border-radius: 999px;
+  padding: 4px;
+  gap: 4px;
+}
+.mode-btn {
+  flex: 1;
+  border: none;
+  background: transparent;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--muted);
+  padding: 12px 8px;
+  border-radius: 999px;
+  transition: all .2s;
+  font-family: inherit;
+  cursor: pointer;
+}
+.mode-btn.active {
+  background: var(--primary);
+  color: #fff;
+  box-shadow: 0 4px 10px rgba(108, 99, 255, .3);
+}
+
+/* ----- ヒント ----- */
+.hint {
+  margin: 10px 0 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+.hint.small { font-size: 12px; }
+.hint.center { text-align: center; }
+
+/* ----- ボタン ----- */
+.row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.row .btn { flex: 1; min-width: 120px; }
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 12px;
+  padding: 14px 18px;
+  font-size: 16px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  text-decoration: none;
+  color: #fff;
+  transition: transform .1s, opacity .2s;
+  -webkit-user-select: none;
+  user-select: none;
+}
+.btn.big { padding: 16px 18px; font-size: 16px; min-height: 52px; }
+.btn.block { display: flex; width: 100%; }
+.btn-primary { background: var(--primary); }
+.btn-secondary { background: var(--secondary); }
+.btn-accent { background: var(--accent); }
+.btn-ghost {
+  background: transparent;
+  color: var(--primary);
+  border: 1px solid var(--primary);
+}
+.btn:active { transform: scale(0.98); }
+.btn:disabled { opacity: .5; pointer-events: none; }
+
+/* ----- 素材一覧 ----- */
+.materials {
+  list-style: none;
+  margin: 14px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.material {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #f7f8fc;
+  padding: 8px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+}
+.material .thumb {
+  width: 56px;
+  height: 56px;
+  border-radius: 8px;
+  object-fit: cover;
+  background: #ddd;
+  flex-shrink: 0;
+}
+.material .info {
+  flex: 1;
+  min-width: 0;
+}
+.material .label {
+  font-size: 12px;
+  color: var(--muted);
+}
+.material .name {
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.material .actions {
+  display: flex;
+  gap: 4px;
+  flex-shrink: 0;
+}
+.icon-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 8px;
+  background: #fff;
+  font-size: 16px;
+  font-weight: bold;
+  color: var(--primary);
+  border: 1px solid var(--border);
+  cursor: pointer;
+  font-family: inherit;
+}
+.icon-btn:disabled { opacity: .35; }
+.icon-btn.danger { color: var(--accent); }
+
+/* ----- 音楽情報 ----- */
+.audio-info {
+  margin-top: 12px;
+  padding: 10px 12px;
+  background: #f7f8fc;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+}
+.audio-info p { margin: 2px 0; font-size: 14px; }
+.audio-name { font-weight: 600; word-break: break-all; }
+.audio-duration { color: var(--muted); font-size: 13px; }
+
+/* ----- 設定 ----- */
+.setting {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+}
+.setting:last-child { border-bottom: none; }
+.setting label {
+  font-size: 14px;
+  font-weight: 600;
+}
+.setting select {
+  flex: 1;
+  max-width: 60%;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: #fff;
+  font-size: 15px;
+  font-family: inherit;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+/* ----- 進捗 ----- */
+.progress { margin-top: 14px; }
+.progress-bar {
+  height: 8px;
+  background: #eee;
+  border-radius: 4px;
+  overflow: hidden;
+}
+.progress-fill {
+  width: 0%;
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+  transition: width .2s;
+}
+#progressText {
+  margin: 8px 0 0;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+/* ----- エラー ----- */
+.error {
+  margin-top: 12px;
+  padding: 10px 12px;
+  background: #fee;
+  color: #c00;
+  border-radius: 10px;
+  font-size: 14px;
+  border: 1px solid #fcc;
+}
+
+/* ----- プレビュー ----- */
+#previewVideo {
+  width: 100%;
+  border-radius: 12px;
+  background: #000;
+  margin-bottom: 12px;
+}
+
+/* ----- ダイアログ ----- */
+dialog {
+  border: none;
+  border-radius: 16px;
+  padding: 0;
+  max-width: 92vw;
+  width: 380px;
+  box-shadow: 0 20px 60px rgba(0,0,0,.3);
+  background: #fff;
+}
+dialog::backdrop { background: rgba(20,30,60,.4); }
+.dialog-form {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.dialog-form h2 { margin: 0; font-size: 18px; }
+.dialog-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 600;
+}
+.dialog-form textarea,
+.dialog-form select,
+.dialog-form input[type="color"] {
+  width: 100%;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  font-family: inherit;
+  font-size: 15px;
+}
+.dialog-form input[type="color"] {
+  height: 44px;
+  padding: 4px;
+}
+.dialog-row { display: flex; gap: 10px; }
+.dialog-row .half { flex: 1; }
+.dialog-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  margin-top: 4px;
+}
+.dialog-actions .btn {
+  padding: 10px 16px;
+  min-height: 44px;
+  font-size: 15px;
+}
+.dialog-error {
+  color: #c00;
+  background: #fee;
+  border: 1px solid #fcc;
+  padding: 8px 10px;
+  border-radius: 8px;
+  margin: 0;
+  font-size: 13px;
+}
+
+footer { padding: 16px; }
+
+/* ===== モード別 表示切替 ===== */
+body.mode-auto .manual-only { display: none !important; }

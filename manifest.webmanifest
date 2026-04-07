@@ -1,0 +1,16 @@
+{
+  "name": "サクッと動画メーカー",
+  "short_name": "動画メーカー",
+  "description": "写真と音楽を選ぶだけで動画を作るiPhone向けPWA",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f4f6fb",
+  "theme_color": "#6c63ff",
+  "lang": "ja",
+  "icons": [
+    { "src": "icon-180.png", "sizes": "180x180", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}
